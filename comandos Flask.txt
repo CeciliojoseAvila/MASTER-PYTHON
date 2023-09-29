@@ -1,0 +1,49 @@
+///////////////////////////// Proyecto con Flask ///////////////////////////
+
+
+1) pip install Flask
+2) main.py ):
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Aprendiendo Flask con Victor Robles"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+3) python main.py
+
+4) base de datos:
+http://localhost/phpmyadmin/index.php?route=/table/structure&db=proyectodflask&table=coches
+
+5) Instalar flask-mysqldb:
+
+---> pip install flask-mysqldb
+
+6) En main.py hacer la importacion y la conexion:
+# Conexion a la DB
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '' ---> colocar la password de Mysql(DB)
+app.config['MYSQL_DB'] = 'proyectoflask'
+
+mysql = MySQL(app)
+
+7) insertar datos:
+@app.route('/insertar_coche')
+def insertar_coche():
+
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"INSERT INTO coches VALUES(NULL, 'Lambo', 'Gallardo', 100000, 'Los Angeles')")
+    cursor.connection.commit()
+
+    return redirect('index')
+8) ejecutar en el navegador: http://127.0.0.1:5000/insertar_coche
+
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\23-flask> python main.py
+
