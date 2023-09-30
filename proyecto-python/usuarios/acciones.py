@@ -1,9 +1,13 @@
 import usuarios.usuario as modelo
+import notas.acciones 
+
+
 
 class Acciones:
 
     def registro(self):
         print("\nOK!! Vamos a registrarte en el sistema...")
+
         nombre = input("\n¿Cuál es tu nombre?: ")
         apellidos = input("\n¿Cuales son tus apellidos?: ")
         email = input("\nIngresa tu email: ")
@@ -21,21 +25,22 @@ class Acciones:
     def login(self):
         print("\nVale!! Identificate en el sistema...")
 
-    try:
-        email = input("\nIngresa tu email: ")
-        password = input("\nIngresa tu contraseña: ")
+        try:
+            email = input("\nIngresa tu email: ")
+            password = input("\nIngresa tu contraseña: ")
 
-        usuario = modelo.Usuario('', '', email, password)
-        login = usuario.Identificar()
+            usuario = modelo.Usuario('', '', email, password)
+            login = usuario.Identificar()
 
-        if email == login[3]:
-            print(f"\nBienvenido {login[1]}, te has registrado en el sistema el {login[5]}")
-            self.proximasAcciones(login)
+            if email == login[3]:
+                print(
+                    f"\nBienvenido {login[1]}, te has registrado en el sistema el {login [5]}")
+                self.proximasAcciones(login)
 
-    except Exception as e:
-        print(type(e))
-        print(type(e).__name__)
-        print(f"Login incorrecto!! intentalo más tarde")
+        except Exception as e:
+            print(type(e))
+            print(type(e).__name__)
+            print(f"Login incorrecto!! intentalo más tarde")
 
     def proximasAcciones(self, usuario):
         print("""
@@ -47,19 +52,22 @@ class Acciones:
         """)
 
         accion = input("¿Qué quieres hacer?: ")
+        hazEl = notas.acciones.Acciones()
 
         if accion == "crear":
-            print("Vamos a crear")
+            hazEl.crear(usuario)
             self.proximasAcciones(usuario)
 
         elif accion == "mostrar":
-            print("Vamos a mostrar")
+            hazEl.mostrar(usuario)
             self.proximasAcciones(usuario)
 
         elif accion == "eliminar":
-            print("Vamos a eliminar")
+            hazEl.borrar(usuario)
             self.proximasAcciones(usuario)
 
-        elif accion == "salir":
+        elif accion == "salir":            
+            print("---->", f"OK, {usuario[1]}, hasta pronto!!!")
             exit()
+
 

@@ -1,0 +1,321 @@
+//////////// proyecto Django ///////////////
+
+1) crear proyecto: django-admin startproject AprendiendoDjango
+2) ejecutar el proyecto, con migrate desde: 22-django>AprendiendoDjango> python manage.py migrate
+3) Lanzar la app: python manage.py runserver :
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py runserver
+
+4) Crear una app en Django: /22-django>AprendiendoDjango>  python manage.py startapp miapp
+
+///// lo que haga en las vistas, debo enlazarlo en las urls.py    ///// 
+
+luego de lanzada la app, agrago el nombre de la url: http://127.0.0.1:8000/hola-mundo
+
+
+//// instalar pylint django ////
+
+5) -- -> pip install pylint-django
+
+Winget install GnuWin32.make
+C:\Program Files(x86)\GnuWin32\bin\make.exe
+
+6) C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py makemigrations
+
+---> C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py sqlmigrate miapp 0001
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py migrate 
+
+//////// CUANDO SE AGREGAN O MODIFICAN DATOS :
+6) C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py makemigrations
+---> C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py sqlmigrate miapp 0002
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py migrate 
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py runserver
+
+------->     http://127.0.0.1:8000/crear-articulo/
+
+con los tres parametros:
+http://127.0.0.1:8000/crear-articulo/superman/peliculon/True
+
+http://127.0.0.1:8000/editar-articulo/3
+
+/////////////////////////////////////////             Link del formulario       /////////////////////////////////
+
+---->            http://127.0.0.1:8000/create-full-article/
+
+7) PANEL DE ADMINISTRACION:
+
+///// CREAR SUPER USUARIO:
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango > python manage.py createsuperuser
+
+cecilio
+cecilio@cecilio.com
+password= 12345ceci
+
+--------- > http://127.0.0.1:8000/admin/login/?next=/admin/
+
+
+8) C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> pip install pillow
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\AprendiendoDjango> python manage.py runserver
+
+
+////////////////////////// Nuevo Proyecto Django //////////////////////////////////////////////////////////////////////////////////////////////
+
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django> django-admin startproject ProyectoDjango 
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django> python manage.py migrate
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django> python manage.py runserver
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py startapp mainapp
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py startapp pages
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py runserver
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py makemigrations
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py sqlmigrate pages 0001
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py migrate
+
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py runserver
+
+http://127.0.0.1:8000/admin/login/?next=/admin/
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py createsuperuser
+usuario= cecilio
+email = cecilio@cecilio.com
+password = 12345
+
+Pages (admin.py) hacer importacion :
+from .models import Page
+
+admin.site.register(Page)
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py runserver
+
+///////// context_processors.py /////
+
+// setting del proyecto django:
+-> 'pages.context_processors.get_pages'
+-> templates -> miapp -> index.html : {{ pages }} en : 
+
+{% block content %}
+    <h1>{{title}}</h1>
+ ->   {{ pages }}
+{% endblock %}
+
+pero la usaremos en el layout.html donde estaba el "sobre nosotros" :
+        {% for page in pages%}
+        <li>
+          <a href="#"> {{page.1}} </a>
+        </li>
+        {% endfor %}
+        
+en urls.py:
+from pages import views as 'page_views'
+
+    path('pagina/', page_views.page, name="page")
+
+navegador: http://127.0.0.1:8000/pagina/
+
+//////////////////////
+pages -> views.py :
+
+from .models import Page
+
+http://127.0.0.1:8000/pagina/sobre-nosotros
+
+
+en el layout.html donde estaba el "sobre nosotros" :
+        {% for page in pages%}
+        <li>
+            <a href="{% url 'page' page.2%}"> {{page.1}} </a>
+        </li>
+        {% endfor %}
+
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> pip install django-ckeditor
+
+
+
+/////////////  pages -> models.py :
+-> from ckeditor.fields import RichTextField
+->  content = RichTextField(verbose_name="Contenido")
+
+EN SETTING del proyectoDjango: 'ckeditor', 
+
+en page.html en 
+<p class="content" >{{page.content}}</p> agregamos "safe" para que tome las modificaciones que se haga en las paginas:
+--->   <p class="content" >{{page.content|safe}}</p>
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py runserver
+
+en pages/models.py (configuraciones de las paginas o estructura(MODELO) :
+--->     order =  models.IntegerField(verbose_name="Orden")
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py makemigrations (2)--> order =  models.IntegerField(default=0, verbose_name="Orden")
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py makemigrations 
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py sqlmigrate pages 0002
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py migrate 
+
+en ----> context_processors.py , agregamos ---> order_by('order')
+asi:  pages = Page.objects.filter(visible=True).order_by('order').values_list('id','title', 'slug')
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py runserver
+
+////////// nueva app "blog"
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py startapp blog
+
+
+//// Creamos el modelo de "blog" e importamos --> 
+from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
+
+/// hacemos las migraciones:
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py makemigrations 
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py sqlmigrate blog 0001
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango> python manage.py migrate 
+
+/// DAR DE ALTA A LOS MODELOS EN admin.py de "blog":
+from django.contrib import admin
+from .models import Category, Article
+# Register your models here.
+admin.site.register(Category)
+admin.site.register(Article)
+
+/// Ejectamos la app:
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango > python manage.py runserver
+
+apps.py de "blog" --- > 
+    verbose_name="Gestión del Blog"
+
+y dentro de setting.py:
+
+
+http://127.0.0.1:8000/articulos/
+
+http://127.0.0.1:8000/admin/login/?next=/admin/
+
+
+/////// registros de usuarios ///////////
+En views.py de --> mainapp ---> ProyectoDjango
+from django.contrib.auth.forms import UserCreationForm
+
+----> def register_page(request):
+
+    register_form = UserCreationForm()
+
+    return render(request, 'users/register.html', {
+        'title': 'Registro',
+        'register_form': register_form
+    })
+
+---- paso seguido en register.html -- users -- mainapp
+
+usuario: manuel55
+clave= proyecto12345
+
+///////// en forms.py, va lo sgte:
+
+from django import forms
+from django.core import validators
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+class registerForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
+
+///////// Y en views.py de mainapp, importo el RegisterForm de forms (from mainapp.forms import RegisterForm)
+
+----- REEMPLAZO -> UserCreationForm() POR --> RegisterForm
+
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango > python manage.py runserver
+http://127.0.0.1:8000/admin/login/?next=/admin/
+
+
+///////    proyecto en mysql, phpMysql //////
+
+http://localhost/phpmyadmin/index.php?route=/server/databases:
+nombre: proyectodjango
+
+en settings.py de proyectoDjango: comentar ---->
+
+"""DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}"""
+
+
+EN SU LUGAR:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'proyectodjango',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': 3306,
+    }
+}
+
+--> LUEGO INSTALAMOS EL DRIVER EN EL PROYECTO:
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango > pip install mysqlclient (como no se deja): la instalamos por acá:
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient
+
+INSTALAR ASI:
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python> pip install mysqlclient-1.4.6-cp38-cp38-win_amd64.whl
+
+///////// ME FUNCIONÓ ASI:
+1)  pip install --upgrade setuptools
+2) pip install pymysql
+3) pip install mysqlclient
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango > python manage.py migrate
+
+///// CREAR SUPER USUARIO:
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango > python manage.py createsuperuser
+
+cecilio
+cecilio@cecilio.com
+password= 12345ceci
+
+
+C:\Users\GERMAN\OneDrive\Escritorio\Master-python\22-django\ProyectoDjango > python manage.py runserver
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

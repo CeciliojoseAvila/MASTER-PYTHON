@@ -21,3 +21,5 @@ CREATE TABLE notas(
     CONSTRAINT pk_notas PRIMARY KEY(id),
     CONSTRAINT fk_notas_usuario FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
 )ENGINE=InnoDb;
+
+/*todo contenido de la DB lo ejecutamos en phpMyadmin*/
